@@ -1,0 +1,184 @@
+[gd_scene load_steps=19 format=3 uid="uid://vdut3psmosqj"]
+
+[ext_resource type="PackedScene" uid="uid://kaqtjpnyijw3" path="res://Scene/player.tscn" id="1_f6udf"]
+[ext_resource type="Script" uid="uid://dmikltk8p24py" path="res://Script/main.gd" id="1_r34rm"]
+[ext_resource type="PackedScene" uid="uid://24y60echxf2f" path="res://Scene/mob.tscn" id="2_2wwxx"]
+[ext_resource type="Script" uid="uid://d3p8cqxc8l12s" path="res://Script/score_label.gd" id="4_2wwxx"]
+[ext_resource type="AudioStream" uid="uid://b18ps3w2af6yu" path="res://Asset/ahhhhh-cartoon-death-scream-dan-barracuda-1-00-03.mp3" id="5_3amdw"]
+[ext_resource type="FontFile" uid="uid://co6uej7367rm1" path="res://THSarabunNew.ttf" id="5_3pt4j"]
+[ext_resource type="PackedScene" uid="uid://d4amep7c7wusb" path="res://Asset/Spaceship.glb" id="6_1xcnr"]
+[ext_resource type="PackedScene" uid="uid://bl08w8o7yqheo" path="res://Asset/Plant.glb" id="7_ow1sv"]
+[ext_resource type="PackedScene" uid="uid://bfnrsqitas84k" path="res://Asset/Plant (1).glb" id="8_c2iwn"]
+[ext_resource type="PackedScene" uid="uid://g7cjr3iq81mg" path="res://Asset/Tree Spiral.glb" id="9_3pt4j"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_r34rm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rlixt"]
+size = Vector3(80, 2, 80)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r34rm"]
+albedo_color = Color(0.0156863, 0.713726, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_f6udf"]
+material = SubResource("StandardMaterial3D_r34rm")
+size = Vector3(80, 2, 80)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3amdw"]
+albedo_color = Color(1, 0.694118, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_1xcnr"]
+material = SubResource("StandardMaterial3D_3amdw")
+
+[sub_resource type="Curve3D" id="Curve3D_ow1sv"]
+closed = true
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -31.9254, 0.330143, -23.6354, 0, 0, 0, 0, 0, 0, 31.9645, 0.326752, -23.6681, 0, 0, 0, 0, 0, 0, 24.2457, -0.335224, 24.0344, 0, 0, 0, 0, 0, 0, -16.4768, -0.336918, 24.3326),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="Theme" id="Theme_r34rm"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_r34rm")
+mob_scene = ExtResource("2_2wwxx")
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+collision_layer = 4
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_r34rm")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_rlixt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_f6udf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.47035e-08, 1, 0, -1, -4.47035e-08, 0, 6, 0)
+light_energy = 1.5
+shadow_enabled = true
+shadow_reverse_cull_face = true
+shadow_opacity = 0.8
+
+[node name="Player" parent="." instance=ExtResource("1_f6udf")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="CameraPivot" type="Marker3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 12, 9)
+
+[node name="Cylinders" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 0, -24)
+mesh = SubResource("CylinderMesh_1xcnr")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 24)
+mesh = SubResource("CylinderMesh_1xcnr")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 0, 24)
+mesh = SubResource("CylinderMesh_1xcnr")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Cylinders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 32, 0, -24)
+mesh = SubResource("CylinderMesh_1xcnr")
+
+[node name="SpawnPath" type="Path3D" parent="."]
+curve = SubResource("Curve3D_ow1sv")
+
+[node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath"]
+transform = Transform3D(0.000511603, 5.30756e-05, -1, 3.63798e-12, 1, 5.30756e-05, 1, -2.71573e-08, 0.000511603, -31.9254, 0.330143, -23.6354)
+
+[node name="MobTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScoreLabel" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 37.0
+offset_right = 297.0
+offset_bottom = 133.0
+theme = SubResource("Theme_r34rm")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "Score: 0"
+script = ExtResource("4_2wwxx")
+
+[node name="Myname" type="Label" parent="UserInterface"]
+layout_mode = 0
+offset_left = 1516.0
+offset_top = 40.0
+offset_right = 1802.0
+offset_bottom = 137.0
+theme = SubResource("Theme_r34rm")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_3pt4j")
+theme_override_font_sizes/font_size = 50
+text = "นายเกียรติศักดิ์ นันทรัตน์"
+
+[node name="Retry" type="ColorRect" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.556863)
+
+[node name="Label" type="Label" parent="UserInterface/Retry"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "Play again by pressing Enter or spacebar"
+
+[node name="Sound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_3amdw")
+volume_db = 28.952
+
+[node name="Root Scene" parent="." instance=ExtResource("6_1xcnr")]
+transform = Transform3D(1.06066, 0, -1.06066, 0, 1.5, 0, 1.06066, 0, 1.06066, 23, 2, -1)
+
+[node name="Root Scene6" parent="." instance=ExtResource("6_1xcnr")]
+transform = Transform3D(-1.5, 0, 0, 0, 1.5, 0, 0, 0, -1.5, 0, 3, 10)
+
+[node name="Root Scene2" parent="." instance=ExtResource("7_ow1sv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, -12)
+
+[node name="Root Scene3" parent="." instance=ExtResource("8_c2iwn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 7)
+
+[node name="Root Scene7" parent="." instance=ExtResource("8_c2iwn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -14)
+
+[node name="Root Scene4" parent="." instance=ExtResource("9_3pt4j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -1)
+
+[node name="Root Scene5" parent="." instance=ExtResource("9_3pt4j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 0, -4)
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
