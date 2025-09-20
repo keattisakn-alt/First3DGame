@@ -91,7 +91,7 @@ mesh = SubResource("CylinderMesh_1xcnr")
 curve = SubResource("Curve3D_ow1sv")
 
 [node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath"]
-transform = Transform3D(0.00051196, 5.30798e-05, -1, 1.81899e-12, 1, 5.30798e-05, 1, -2.71766e-08, 0.00051196, -31.9254, 0.330143, -23.6354)
+transform = Transform3D(0.000511603, 5.30756e-05, -1, 3.63798e-12, 1, 5.30756e-05, 1, -2.71573e-08, 0.000511603, -31.9254, 0.330143, -23.6354)
 
 [node name="MobTimer" type="Timer" parent="."]
 wait_time = 0.1
@@ -119,14 +119,14 @@ script = ExtResource("4_2wwxx")
 
 [node name="Myname" type="Label" parent="UserInterface"]
 layout_mode = 0
-offset_left = 1079.0
+offset_left = 1150.0
 offset_top = 31.0
-offset_right = 1513.0
+offset_right = 1784.0
 offset_bottom = 128.0
 theme = SubResource("Theme_r34rm")
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 40
-text = "นายเกียรติศักดิ์ นันทรัตน์"
+text = "keattisak nantharat 673380072-9"
 
 [node name="Retry" type="ColorRect" parent="UserInterface"]
 layout_mode = 1
